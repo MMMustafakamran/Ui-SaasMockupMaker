@@ -1,12 +1,12 @@
-# SaaS Mockup Generator
+# SaaS Mockup Generator Pro
 
-A Node.js utility script that uses Puppeteer to batch-process raw UI screenshots and convert them into beautiful, presentation-ready SaaS mockups. 
+A Node.js utility suite that uses Puppeteer to batch-process raw UI screenshots and convert them into presentation-ready SaaS marketing graphics.
 
 ## Features
 - **Batch Processing**: Automatically converts all `.png` and `.jpg` files from an input directory.
-- **Beautiful Defaults**: Applies a modern linear-gradient background, generous padding, rounded corners, and a realistic multi-layered 3D box shadow.
+- **Multiple Presentation Styles**: Generate flat, cascading (multi-page), or 3D isometric mockups.
 - **No Local Server Required**: Injects images as Base64 data URIs directly into the headless browser.
-- **Transparent Output**: Captures the wrapper element with a transparent background outside the gradient box.
+- **Transparent Output**: Captures the wrapper element with a transparent background for easy compositing.
 
 ## Installation
 
@@ -19,28 +19,45 @@ A Node.js utility script that uses Puppeteer to batch-process raw UI screenshots
 
 ## Usage
 
-1. **Prepare the Input Directory**:
-   Run the script once to automatically generate the `input_images` and `output_images` folders:
-   ```bash
-   node generateMockups.js
-   ```
+Place your raw UI screenshots (`.png`, `.jpg`, `.jpeg`) into the `input_images` directory. If the directory doesn't exist, running any script will automatically create it.
 
-2. **Add Your Screenshots**:
-   Place your raw UI screenshots (`.png`, `.jpg`, `.jpeg`) into the newly created `input_images` directory.
+All generated graphics will be saved in organized folders inside the `output_images` directory.
 
-3. **Generate Mockups**:
-   Run the script again:
-   ```bash
-   node generateMockups.js
-   ```
+### 🚀 Run All Generators (Master Script)
+To generate the Flat, Cascade, and Isometric variations for your images all at once in a single command, run:
+```bash
+node generateAll.js
+```
 
-4. **View the Results**:
-   Your finished, high-quality mockups will be saved in the `output_images` directory with their original filenames.
+---
 
-## Customization
+### Run Individual Generators
 
-You can easily tweak the styling by editing the `htmlTemplate` variable inside `generateMockups.js`.
+You can also run specific styles individually:
 
-- **Background Gradient**: Change the `background: linear-gradient(...)` property under `#wrapper`.
-- **Padding**: Adjust the `padding: 80px;` property to add more or less space around your image.
-- **Shadow & Border Radius**: Modify the `box-shadow` and `border-radius` properties under `#wrapper img`.
+**1. Flat & Clean Mockup**
+Creates a clean, flat mockup on a soft sage background with rounded corners and a diffuse shadow.
+```bash
+node generateMockups.js
+```
+
+**2. Multi-Page Cascade Mockup**
+Takes the first 3 images from your input folder and composites them into a stunning overlapping "deck of cards" stacked layout.
+```bash
+node generateCascade.js
+```
+
+**3. 3D Isometric Mockup**
+Applies a true 3D perspective tilt and thick extruded shadow to your screenshots, resting them on a premium surface.
+```bash
+node generateIsometric.js
+```
+
+**4. Zoom Tilt Mockup**
+Creates a zoomed-in, overlapped display of 2 images featuring a signature 10-degree flat tilt, mimicking modern UI designer portfolios.
+```bash
+node generateZoomTilt.js
+```
+
+## Troubleshooting
+If you encounter a `Navigation timeout of 30000 ms exceeded` error, this just means Puppeteer took a little too long to render a large high-resolution image. Simply re-run the script or the specific command that failed, and it will pick up where it left off!

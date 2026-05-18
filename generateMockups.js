@@ -2,6 +2,28 @@ const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
 
+// === USER SETTINGS ===
+// You can easily change the background gradient here!
+// 
+// SOME GOOD-LOOKING NEUTRAL & PREMIUM GRADIENTS TO TRY:
+// 1. Dark Sleek (Default) : 'linear-gradient(135deg, #1e1e24 0%, #111115 100%)'
+// 2. Muted Sage Green     : 'linear-gradient(135deg, #dce1d8 0%, #c8cdc4 100%)'
+// 3. Soft Silver/Grey     : 'linear-gradient(135deg, #e2e2e2 0%, #cfcfcf 100%)'
+// 4. Warm Sand            : 'linear-gradient(135deg, #e6ded5 0%, #d5cabd 100%)'
+// 5. Pure Minimalist White: 'linear-gradient(135deg, #ffffff 0%, #f5f5f5 100%)'
+// 6. Deep Midnight Blue   : 'linear-gradient(135deg, #1a1b26 0%, #11111a 100%)'
+// 7. Lavender Mist        : 'linear-gradient(135deg, #e4e4f9 0%, #d4d4f2 100%)'
+// 8. Dusty Rose           : 'linear-gradient(135deg, #eedbcf 0%, #d8c2b7 100%)'
+// 9. Cyberpunk Neon Dark  : 'linear-gradient(135deg, #09090b 0%, #1a0b2e 100%)'
+// 10. Ocean Breeze        : 'linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%)'
+// 11. Tech Blue (Modern)  : 'linear-gradient(135deg, #0a192f 0%, #112240 100%)'
+// 12. Soft Peach & Ice    : 'linear-gradient(135deg, #fff1eb 0%, #ace0f9 100%)'
+// 13. High-End Graphite   : 'linear-gradient(135deg, #2c3e50 0%, #000000 100%)'
+// 14. Smooth Matte Black  : '#121212'
+// 15. Transparent Output  : 'transparent'
+// =====================
+const BACKGROUND_GRADIENT = 'linear-gradient(135deg, #e4e4f9 0%, #d4d4f2 100%)';
+
 const inputDir = path.join(__dirname, 'input_images');
 const outputDir = path.join(__dirname, 'output_images');
 
@@ -21,7 +43,7 @@ function getBase64Image(filePath) {
     return `data:${mimeType};base64,${imageBuffer.toString('base64')}`;
 }
 
-const htmlTemplate = (base64Image) => `
+const htmlTemplate = (base64Image, bgGradient) => `
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,23 +57,23 @@ const htmlTemplate = (base64Image) => `
             background: transparent;
         }
         #wrapper {
-            /* Subtle, muted sage-grey gradient matching the reference */
-            background: linear-gradient(135deg, #dce1d8 0%, #c8cdc4 100%);
-            padding: 80px;
+            /* Dark sleek gradient matching cascade */
+            background: ${bgGradient};
+            padding: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
             width: fit-content;
             height: fit-content;
-            border-radius: 24px;
+            border-radius: 32px;
         }
         #wrapper img {
             border-radius: 16px;
-            /* Soft, diffuse shadow matching the reference */
+            /* Intense floating shadow matching cascade */
             box-shadow: 
-                0 30px 60px -15px rgba(0, 0, 0, 0.15),
-                0 15px 30px -10px rgba(0, 0, 0, 0.1),
-                0 0 0 1px rgba(0, 0, 0, 0.03);
+                -30px 30px 60px rgba(0,0,0,0.5),
+                -15px 15px 30px rgba(0,0,0,0.3),
+                0 0 0 1px rgba(255,255,255,0.05);
             max-width: 1400px;
             display: block;
             width: 100%;
@@ -103,9 +125,9 @@ async function processImages() {
 
         try {
             const base64Image = getBase64Image(inputPath);
-            const htmlContent = htmlTemplate(base64Image);
+            const htmlContent = htmlTemplate(base64Image, BACKGROUND_GRADIENT);
 
-            await page.setContent(htmlContent, { waitUntil: 'networkidle0' });
+            await page.setContent(htmlContent, { waitUntil: 'load' });
 
             const wrapper = await page.$('#wrapper');
             if (wrapper) {
