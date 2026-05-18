@@ -44,26 +44,26 @@ const htmlTemplate = (images) => {
         }
         .mockup {
             position: absolute;
-            border-radius: 16px;
-            /* Soft, diffuse shadow matching the reference */
-            box-shadow: 
-                -30px 30px 80px rgba(0,0,0,0.15),
-                -10px 10px 30px rgba(0,0,0,0.05),
-                0 0 0 1px rgba(0,0,0,0.03);
             /* The signature flat diagonal tilt */
             transform: rotate(-10deg);
         }
         .mockup img {
             display: block;
             border-radius: 16px;
+            /* Strong, clearly visible floating shadow behind the image */
+            box-shadow: 
+                -40px 40px 100px rgba(0,0,0,0.3),
+                -15px 15px 40px rgba(0,0,0,0.2),
+                0 0 0 1px rgba(0,0,0,0.05);
             /* Make the image massive so the outer wrapper naturally crops out the right and bottom */
             width: 2400px; 
             height: auto;
         }
         /* Positioning to focus on the top-left edges */
-        /* Shifted right so the top-left corner of img1 stays completely inside the frame */
-        .img1 { top: 50px; left: 150px; z-index: 1; }
-        .img2 { top: 350px; left: 1150px; z-index: 2; }
+        /* Shifted to be almost near the left edge */
+        .img1 { top: 50px; left: 110px; z-index: 1; }
+        /* Shifted left and up to show more of the second screen */
+        .img2 { top: 250px; left: 950px; z-index: 2; }
     </style>
 </head>
 <body>
