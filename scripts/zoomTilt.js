@@ -53,7 +53,15 @@ const htmlTemplate = (images) => {
             height: auto;
         }
         .img1 { top: 50px; left: 110px; z-index: 1; }
-        .img2 { top: 250px; left: 950px; z-index: 2; }
+        .img2 { top: 150px; left: 800px; z-index: 2; }
+        
+        /* Reduce the shadow effect specifically for the second image */
+        .img2 img {
+            box-shadow: 
+                -20px 20px 60px rgba(0,0,0,0.15),
+                -10px 10px 25px rgba(0,0,0,0.1),
+                0 0 0 1px rgba(0,0,0,0.03);
+        }
     </style>
 </head>
 <body>
