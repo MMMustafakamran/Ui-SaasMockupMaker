@@ -1,63 +1,51 @@
-# SaaS Mockup Generator Pro
+# SaaS Demo Graphics Generator
 
-A Node.js utility suite that uses Puppeteer to batch-process raw UI screenshots and convert them into presentation-ready SaaS marketing graphics.
+A professional Node.js & Puppeteer batch-processing pipeline that instantly converts raw UI screenshots into gorgeous, presentation-ready SaaS marketing assets.
 
-## Features
-- **Batch Processing**: Automatically converts all `.png` and `.jpg` files from an input directory.
-- **Multiple Presentation Styles**: Generate flat, cascading (multi-page), or 3D isometric mockups.
-- **No Local Server Required**: Injects images as Base64 data URIs directly into the headless browser.
-- **Transparent Output**: Captures the wrapper element with a transparent background for easy compositing.
+## Project Structure
 
-## Installation
+This project has been expertly organized for maximum simplicity and flexibility:
 
-1. Ensure you have [Node.js](https://nodejs.org/) installed.
-2. Clone or download this project.
-3. Install the required dependencies:
-   ```bash
-   npm install
-   ```
-
-## Usage
-
-Place your raw UI screenshots (`.png`, `.jpg`, `.jpeg`) into the `input_images` directory. If the directory doesn't exist, running any script will automatically create it.
-
-All generated graphics will be saved in organized folders inside the `output_images` directory.
-
-### 🚀 Run All Generators (Master Script)
-To generate the Flat, Cascade, and Isometric variations for your images all at once in a single command, run:
-```bash
-node generateAll.js
+```text
+/config.js           <-- Global configuration (Change background colors here)
+/index.js            <-- The Master script to run everything
+/input/              <-- Drop your raw screenshots (.png, .jpg) here
+/output/             <-- Automatically generated folders for each mockup style
+/scripts/            <-- The individual mockup generator engines
 ```
 
----
+## How to Customize Styles
 
-### Run Individual Generators
+You can control the visual theme of the **entire pipeline** from one single file!
+Open **`config.js`** at the root of the project. Here you can easily change the global `BACKGROUND_GRADIENT`. The file includes a list of 15 premium curated colors (Dark Sleek, Muted Sage, Cyberpunk Neon, etc.) that you can simply copy and paste.
 
-You can also run specific styles individually:
+## Setup & Installation
 
-**1. Flat & Clean Mockup**
-Creates a clean, flat mockup on a soft sage background with rounded corners and a diffuse shadow.
+1. Make sure you have [Node.js](https://nodejs.org/) installed.
+2. Install the necessary dependencies (Puppeteer):
 ```bash
-node generateMockups.js
+npm install
 ```
 
-**2. Multi-Page Cascade Mockup**
-Takes the first 3 images from your input folder and composites them into a stunning overlapping "deck of cards" stacked layout.
-```bash
-node generateCascade.js
-```
+## How to Generate Mockups
 
-**3. 3D Isometric Mockup**
-Applies a true 3D perspective tilt and thick extruded shadow to your screenshots, resting them on a premium surface.
+1. Place your raw screenshots into the **`input/`** folder.
+2. Run the master script to generate all 4 styles at once:
 ```bash
-node generateIsometric.js
+node index.js
 ```
+3. Check the **`output/`** folder! The images will be beautifully sorted into their respective style subdirectories.
 
-**4. Zoom Tilt Mockup**
-Creates a zoomed-in, overlapped display of 2 images featuring a signature 10-degree flat tilt, mimicking modern UI designer portfolios.
-```bash
-node generateZoomTilt.js
-```
+### The 4 Generated Styles
+
+**1. Flat Mockup (`output/flat`)**
+A clean, elegant, straight-on presentation with soft diffused shadows and modern window rounding.
+
+**2. Cascade Mockup (`output/cascade`)**
+A multi-image "Deck of Cards" effect that beautifully stacks up to 3 screenshots with depth-of-field, tilt, and perspective.
+
+**3. Zoom Tilt Mockup (`output/zoom_tilt`)**
+Creates a highly zoomed-in, cropped display of 2 images featuring a signature 10-degree flat tilt, mimicking modern UI designer portfolios on Dribbble.
 
 ## Troubleshooting
-If you encounter a `Navigation timeout of 30000 ms exceeded` error, this just means Puppeteer took a little too long to render a large high-resolution image. Simply re-run the script or the specific command that failed, and it will pick up where it left off!
+If you encounter a `Navigation timeout of 30000 ms exceeded` error, this just means Puppeteer took a little too long to render a large high-resolution image. Simply re-run the script and it will pick up where it left off!

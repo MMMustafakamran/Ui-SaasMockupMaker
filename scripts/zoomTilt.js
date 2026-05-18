@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 const puppeteer = require('puppeteer');
+const config = require('../config.js');
 
-const inputDir = path.join(__dirname, 'input_images');
-const outputDir = path.join(__dirname, 'output_images', 'zoom_tilt');
-
+const outputDir = path.join(config.OUTPUT_DIR, 'zoom_tilt');
 if (!fs.existsSync(outputDir)) {
     fs.mkdirSync(outputDir, { recursive: true });
 }
@@ -17,7 +16,6 @@ function getBase64Image(filePath) {
 }
 
 const htmlTemplate = (images) => {
-    // Generate HTML for exactly 2 images
     const imageTags = images.slice(0, 2).map((base64, index) => `
         <div class="mockup img${index + 1}">
             <img src="${base64}" alt="Mockup ${index + 1}">
@@ -32,11 +30,9 @@ const htmlTemplate = (images) => {
     <style>
         body, html { margin: 0; padding: 0; background: transparent; display: inline-block; }
         #wrapper {
-            /* Soft, light silver background from the reference */
-            background: linear-gradient(135deg, #e3e4e6 0%, #f4f5f7 100%);
+            background: ${config.BACKGROUND_GRADIENT};
             display: block;
             position: relative;
-            /* Fixed canvas size that cuts off the bottom/right for the zoomed crop effect */
             width: 1600px;
             height: 1200px;
             overflow: hidden;
@@ -44,25 +40,19 @@ const htmlTemplate = (images) => {
         }
         .mockup {
             position: absolute;
-            /* The signature flat diagonal tilt */
             transform: rotate(-10deg);
         }
         .mockup img {
             display: block;
             border-radius: 16px;
-            /* Strong, clearly visible floating shadow behind the image */
             box-shadow: 
                 -40px 40px 100px rgba(0,0,0,0.3),
                 -15px 15px 40px rgba(0,0,0,0.2),
                 0 0 0 1px rgba(0,0,0,0.05);
-            /* Make the image massive so the outer wrapper naturally crops out the right and bottom */
             width: 2400px; 
             height: auto;
         }
-        /* Positioning to focus on the top-left edges */
-        /* Shifted to be almost near the left edge */
         .img1 { top: 50px; left: 110px; z-index: 1; }
-        /* Shifted left and up to show more of the second screen */
         .img2 { top: 250px; left: 950px; z-index: 2; }
     </style>
 </head>
@@ -76,8 +66,8 @@ const htmlTemplate = (images) => {
 };
 
 async function processImages() {
-    if (!fs.existsSync(inputDir)) return;
-    const files = fs.readdirSync(inputDir).filter(f => ['.png', '.jpg', '.jpeg'].includes(path.extname(f).toLowerCase()));
+    if (!fs.existsSync(config.INPUT_DIR)) return;
+    const files = fs.readdirSync(config.INPUT_DIR).filter(f => ['.png', '.jpg', '.jpeg'].includes(path.extname(f).toLowerCase()));
     
     if (files.length < 2) {
         console.log("Not enough images found. The Zoom Tilt mockup requires at least 2 images.");
@@ -89,7 +79,7 @@ async function processImages() {
     const page = await browser.newPage();
     await page.setViewport({ width: 2560, height: 1600, deviceScaleFactor: 2 });
 
-    const inputPaths = files.slice(0, 2).map(f => path.join(inputDir, f));
+    const inputPaths = files.slice(0, 2).map(f => path.join(config.INPUT_DIR, f));
     const base64Images = inputPaths.map(getBase64Image);
     const outputPath = path.join(outputDir, "zoom_tilt_mockup.png");
 
@@ -104,7 +94,6 @@ async function processImages() {
     } catch (error) {
         console.error(`Error generating Zoom Tilt:`, error.message);
     }
-    
     await browser.close();
 }
 
