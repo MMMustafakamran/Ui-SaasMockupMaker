@@ -32,16 +32,16 @@ const htmlTemplate = (images) => {
     <style>
         body, html { margin: 0; padding: 0; background: transparent; display: inline-block; }
         #wrapper {
-            background: linear-gradient(135deg, #1e1e24 0%, #111115 100%);
-            padding: 150px;
+            background: linear-gradient(135deg, #e3e4e6 0%, #f4f5f7 100%);
             display: flex;
             position: relative;
-            /* Set fixed dimensions based on cascade spread */
-            width: 1600px;
+            /* Perfectly proportioned container to hold the 1200px images */
+            width: 2000px;
             height: 1200px;
             border-radius: 32px;
             overflow: hidden;
             perspective: 2000px;
+            box-sizing: border-box;
         }
         .mockup {
             position: absolute;
@@ -58,13 +58,13 @@ const htmlTemplate = (images) => {
         .mockup img {
             border-radius: 16px;
             display: block;
-            width: 900px; /* Fixed width to make them uniform */
+            width: 1200px; /* Increased from 900px to better fill screen */
             height: auto;
         }
-        /* Beautiful overlapping diagonal stack */
-        .img1 { top: 100px; left: 600px; z-index: 1; opacity: 0.6; }
-        .img2 { top: 200px; left: 400px; z-index: 2; opacity: 0.85; }
-        .img3 { top: 300px; left: 200px; z-index: 3; opacity: 1; }
+        /* Centered beautifully inside the 2000x1200 wrapper */
+        .img1 { top: 160px; left: 600px; z-index: 1; opacity: 0.85; }
+        .img2 { top: 260px; left: 400px; z-index: 2; opacity: 0.95; }
+        .img3 { top: 360px; left: 200px; z-index: 3; opacity: 1; }
     </style>
 </head>
 <body>

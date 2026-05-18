@@ -22,7 +22,7 @@ const puppeteer = require('puppeteer');
 // 14. Smooth Matte Black  : '#121212'
 // 15. Transparent Output  : 'transparent'
 // =====================
-const BACKGROUND_GRADIENT = 'linear-gradient(135deg, #e4e4f9 0%, #d4d4f2 100%)';
+const BACKGROUND_GRADIENT = 'linear-gradient(135deg, #e3e4e6 0%, #f4f5f7 100%)';
 
 const inputDir = path.join(__dirname, 'input_images');
 const outputDir = path.join(__dirname, 'output_images');
